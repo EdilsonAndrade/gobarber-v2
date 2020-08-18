@@ -5,6 +5,7 @@
   "username":"postgres",
   "password":"docker",
   "port":5432,
+  "entities": ["./src/models/*.ts"],
   "migrations":[
     "./src/database/migrations/*.ts"
   ],

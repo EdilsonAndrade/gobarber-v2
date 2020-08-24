@@ -14,7 +14,7 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-param-reasign': 'off',
     camelcase: 'off',
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    'no-unused-vars': ['error', { argsIgnorePattern: '_' }],
     'prettier/prettier': 'error',
     'import/extensions': [
       'error',

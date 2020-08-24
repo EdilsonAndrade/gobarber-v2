@@ -4,9 +4,11 @@ import { parseISO } from 'date-fns';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
 
+appointmentsRouter.use(ensureAuthenticated);
 appointmentsRouter.get('/', async (resquest, response) => {
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
   return response.json(await appointmentsRepository.find());
@@ -27,7 +29,7 @@ appointmentsRouter.post('/', async (request, response) => {
 
     return response.json(appointment);
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(error.statusCode).json({ error: error.message });
   }
 });
 

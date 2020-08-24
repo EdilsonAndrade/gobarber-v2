@@ -2,6 +2,8 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import auth from '../config/auth';
+import AppError from '../error/AppError';
 
 interface Request {
   email: string;
@@ -21,17 +23,20 @@ export default class CreateUserService {
     });
 
     if (!user) {
-      throw new Error('Email/password does not match');
+      throw new AppError('Email/password does not match', 401);
     }
 
     const matchedPassword = await compare(password, user.password);
 
     if (!matchedPassword) {
-      throw new Error('Email/password does not match');
+      throw new AppError('Email/password does not match', 401);
     }
 
     delete user.password;
-    const token = sign({}, '58223e783f568d1b8436dc1f62246b16');
+    const token = sign({}, auth.jwt.tokenKey, {
+      expiresIn: auth.jwt.expiresIn,
+      subject: user.id,
+    });
     const response = {
       user,
       token,

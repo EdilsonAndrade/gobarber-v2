@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {shade} from 'polished';
+import { shade } from 'polished';
 
 export const Container = styled.button`
         width:340px;
@@ -11,7 +11,6 @@ export const Container = styled.button`
         font-weight:500;
         transition: background-color 0.2s;
         :hover{
-          background: ${shade(0.2,'#FF9000')}
+          background: ${shade(0.2, '#FF9000')}
         }
 `;
-

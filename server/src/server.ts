@@ -1,12 +1,14 @@
 import 'reflect-metadata';
 import express, { Response, Request, NextFunction } from 'express';
 import 'express-async-error';
+import cors from 'cors';
 import routes from './routes';
 import './database';
 import fileConfig from './config/fileConfig';
 import AppError from './error/AppError';
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(fileConfig.directory));
 app.use(routes);

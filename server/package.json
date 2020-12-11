@@ -9,7 +9,9 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@types/cors": "^2.8.9",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
     "express-async-error": "^0.0.2",

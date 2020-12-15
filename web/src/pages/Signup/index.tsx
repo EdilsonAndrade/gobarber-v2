@@ -1,18 +1,20 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useContext } from 'react';
 import {
   FiUser, FiArrowLeft, FiLock, FiMail,
 } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import logo from '../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import { Container, Content, Background } from './styles';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import handleErrros from '../utils/handleErrors';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import handleErrros from '../../utils/handleErrors';
+import { AuthContext } from '../../context/AuthContext';
 
 const Signup: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const { signIn } = useContext(AuthContext);
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
@@ -22,7 +24,7 @@ const Signup: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('Digite e-mail válido'),
         password: Yup.string().min(6, 'Mínimo 6 caracteres'),
       });
-
+      signIn();
       await schema.validate(data, {
         abortEarly: false,
       });

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import signinBackgroundimg from '../assets/sign-in-background.png';
-import {shade} from 'polished'
+import { shade } from 'polished';
+import signinBackgroundimg from '../../assets/sign-in-background.png';
+
 export const Container = styled.div`
 
 width:100%;
@@ -35,7 +36,7 @@ export const Content = styled.div`
     transition: color 0.2s;
     display:block;
     :hover{
-      color: ${shade(0.2,'#F4EDE8')}
+      color: ${shade(0.2, '#F4EDE8')}
     }
   }
 
@@ -48,7 +49,7 @@ export const Content = styled.div`
     transition: color 0.2s;
     display:block;
     :hover{
-      color: ${shade(0.2,'#FF9000')}
+      color: ${shade(0.2, '#FF9000')}
     }
 
     svg{

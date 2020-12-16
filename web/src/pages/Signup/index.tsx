@@ -10,13 +10,16 @@ import { Container, Content, Background } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import handleErrros from '../../utils/handleErrors';
-import { AuthContext } from '../../context/AuthContext';
 
+interface ICredential{
+  name:string;
+  email:string;
+  password:string;
+}
 const Signup: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { signIn } = useContext(AuthContext);
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async (data: ICredential) => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
@@ -24,7 +27,6 @@ const Signup: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('Digite e-mail válido'),
         password: Yup.string().min(6, 'Mínimo 6 caracteres'),
       });
-      signIn();
       await schema.validate(data, {
         abortEarly: false,
       });
@@ -40,7 +42,6 @@ const Signup: React.FC = () => {
         <img src={logo} alt="logo" />
         <h2>Faça seu cadastro</h2>
         <Form ref={formRef} onSubmit={handleSubmit}>
-
           <Input name="name" icon={FiUser} type="text" placeholder="Nome" />
           <Input name="email" icon={FiMail} type="text" placeholder="E-mail" />
           <Input name="password" icon={FiLock} type="password" placeholder="Senha" />

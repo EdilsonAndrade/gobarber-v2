@@ -1,30 +1,61 @@
-import React, { createContext, useState } from 'react';
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
+import React, {
+  createContext, useCallback, useContext, useState,
+} from 'react';
 
+import api from '../services/api';
+
+interface Credential{
+  email:string;
+  password:string;
+}
+interface IUserData{
+  token:string;
+  user:object;
+}
 interface AuthContextData{
-  name:string;
-  signIn():void;
-  page: React.ReactNode;
-  step: 'Login' | 'Forget' | 'Signup';
+  user:object;
+  signIn(credentials:Credential):Promise<void>;
+  signOut():void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider:React.FC = ({ children }) => {
-  const [page, setPage] = useState<React.ReactNode>(<Signin />);
+  const [userData, setUserData] = useState<IUserData>(() => {
+    const token = localStorage.getItem('@Gobarber_Token');
+    const user = localStorage.getItem('@Gobarber_User');
 
-  const signIn = () => {
-    setPage(<Signup />);
-  };
+    if (token && user) {
+      return {
+        token,
+        user: JSON.parse(user),
+      };
+    }
 
+    return {} as IUserData;
+  });
+
+  const signIn = useCallback(async ({ email, password }) => {
+    const response = await api.post('/sessions', {
+      email,
+      password,
+    });
+    const { user, token } = response.data;
+
+    localStorage.setItem('@Gobarber_Token', token);
+    localStorage.setItem('@Gobarber_User', JSON.stringify(user));
+    setUserData({ token, user });
+  }, []);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('Gobarber_Token');
+    localStorage.removeItem('Gobarber_User');
+  }, []);
   return (
     <AuthContext.Provider value={{
-      name: 'Edilson',
       signIn,
-      page,
-      step: 'Login',
-
+      signOut,
+      user: userData.user,
     }}
     >
       {children}
@@ -32,4 +63,21 @@ const AuthProvider:React.FC = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+function useAuth(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+}
+
+function useLogout(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+}
+export { AuthProvider, useAuth, useLogout };

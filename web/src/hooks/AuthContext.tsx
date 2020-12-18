@@ -4,24 +4,28 @@ import React, {
 
 import api from '../services/api';
 
-interface Credential{
+interface ICredential{
   email:string;
   password:string;
 }
 interface IUserData{
+  id:string;
+  name:string;
+}
+interface IUserCredential{
   token:string;
-  user:object;
+  user:IUserData;
 }
 interface AuthContextData{
-  user:object;
-  signIn(credentials:Credential):Promise<void>;
+  user:IUserData;
+  signIn(credentials:ICredential):Promise<void>;
   signOut():void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider:React.FC = ({ children }) => {
-  const [userData, setUserData] = useState<IUserData>(() => {
+  const [userData, setUserData] = useState<IUserCredential>(() => {
     const token = localStorage.getItem('@Gobarber_Token');
     const user = localStorage.getItem('@Gobarber_User');
 
@@ -32,7 +36,7 @@ const AuthProvider:React.FC = ({ children }) => {
       };
     }
 
-    return {} as IUserData;
+    return {} as IUserCredential;
   });
 
   const signIn = useCallback(async ({ email, password }) => {

@@ -9,6 +9,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import handleErrros from '../../utils/handleErrors';
 import { useAuth } from '../../hooks/AuthContext';
+import { useToast } from '../../hooks/ToastContext';
 
 interface ICredential{
   email:string;
@@ -18,6 +19,7 @@ interface ICredential{
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
+  const { showMessage, closeMessage } = useToast();
 
   const handleSubmit = useCallback(async (data: ICredential) => {
     try {
@@ -31,9 +33,17 @@ const Signin: React.FC = () => {
       });
       await signIn({ email: data.email, password: data.password });
     } catch (error) {
-      formRef.current?.setErrors(handleErrros(error));
+      if (error instanceof Yup.ValidationError) {
+        formRef.current?.setErrors(handleErrros(error));
+      }
+
+      showMessage({
+        title: 'Ocorreu um erro',
+        message: 'Ocorreu um erro ao fazer login, cheque as credenciais',
+        type: 'default',
+      });
     }
-  }, []);
+  }, [signIn, showMessage]);
 
   return (
     <Container>

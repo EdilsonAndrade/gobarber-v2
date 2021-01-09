@@ -12,9 +12,9 @@ height:100vh;
 `;
 
 export const Content = styled.div`
-  margin-top:90px;
   flex-direction:column;
   align-items:center;
+  justify-content:center;
   display:flex;
 
   h2{

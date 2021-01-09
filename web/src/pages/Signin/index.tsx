@@ -3,8 +3,11 @@ import * as Yup from 'yup';
 import { FiLogIn, FiLock, FiMail } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
-import { Container, Content, Background } from './styles';
+import {
+  Container, Content, AnimatedContent, Background,
+} from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import handleErrros from '../../utils/handleErrors';
@@ -40,7 +43,7 @@ const Signin: React.FC = () => {
       showMessage({
         title: 'Ocorreu um erro',
         message: 'Ocorreu um erro ao fazer login, cheque as credenciais',
-        type: 'default',
+        type: 'error',
       });
     }
   }, [signIn, showMessage]);
@@ -49,20 +52,22 @@ const Signin: React.FC = () => {
     <Container>
 
       <Content>
-        <img src={logo} alt="logo" />
-        <h2>Faça seu Login</h2>
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
-          <Input name="password" icon={FiLock} type="password" placeholder="Senha" />
-          <Button type="submit">Entrar</Button>
-          <a href="forgot">Esqueci minha senha</a>
-        </Form>
+        <AnimatedContent>
+          <img src={logo} alt="logo" />
 
-        <a href="create">
-          <FiLogIn />
-          Criar conta
-        </a>
+          <h2>Faça seu Login</h2>
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
+            <Input name="password" icon={FiLock} type="password" placeholder="Senha" />
+            <Button type="submit">Entrar</Button>
+            <a href="forgot">Esqueci minha senha</a>
+          </Form>
 
+          <Link to="/signup">
+            <FiLogIn />
+            Criar conta
+          </Link>
+        </AnimatedContent>
       </Content>
       <Background />
     </Container>

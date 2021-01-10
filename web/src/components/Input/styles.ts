@@ -44,7 +44,11 @@ color: #FF9000;
 svg{
   margin-right:5px;
 }
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px  #232129 inset;
+}
 input{
+
   color: #F4EDE8;
   flex:1;
   margin-right:5px;

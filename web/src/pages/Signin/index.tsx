@@ -3,8 +3,9 @@ import * as Yup from 'yup';
 import { FiLogIn, FiLock, FiMail } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
+
 import {
   Container, Content, AnimatedContent, Background,
 } from './styles';
@@ -22,8 +23,8 @@ interface ICredential{
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
-  const { showMessage, closeMessage } = useToast();
-
+  const { showMessage } = useToast();
+  const history = useHistory();
   const handleSubmit = useCallback(async (data: ICredential) => {
     try {
       formRef.current?.setErrors({});
@@ -34,10 +35,13 @@ const Signin: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
       await signIn({ email: data.email, password: data.password });
+      history.push('/dashboard');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         formRef.current?.setErrors(handleErrros(error));
+        return;
       }
 
       showMessage({

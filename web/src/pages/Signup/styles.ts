@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 import signupBrackgroud from '../../assets/sign-up-background.png';
 
@@ -17,7 +17,32 @@ export const Content = styled.div`
   justify-content:center;
   display:flex;
 
-  h2{
+
+
+  width:100%;
+  max-width:700px;
+
+`;
+
+const fromRight = keyframes`
+from{
+  opacity:0;
+  transform: translateX(50px);
+}
+to{
+  opacity:1;
+  transform: translateX(0);
+}
+`;
+
+export const AnimatedContent = styled.div`
+ flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  display:flex;
+
+animation: ${fromRight} 1s;
+ h2{
     margin-top:100px;
     text-align: center;
   }
@@ -58,10 +83,6 @@ export const Content = styled.div`
       color: #FF9000;
     }
   }
-
-  width:100%;
-  max-width:700px;
-
 `;
 export const Background = styled.div`
 flex:1;

@@ -1,5 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
-
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
 
@@ -29,5 +28,7 @@ export default createGlobalStyle`
   button{
     cursor: pointer;
   }
-
-`
+  input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px inset;
+}
+`;

@@ -5,12 +5,13 @@
   "username":"postgres",
   "password":"docker",
   "port":5432,
-  "entities": ["./src/models/*.ts"],
+  "entities": ["./src/modules/appointments/infra/typeorm/entities/*.ts",
+    "./src/modules/users/infra/typeorm/entities/*.ts"],
   "migrations":[
-    "./src/database/migrations/*.ts"
+    "./src/shared/infra/database/migrations/*.ts"
   ],
   "cli":{
-    "migrationsDir":"./src/database/migrations"
+    "migrationsDir":"./src/shared/infra//database/migrations"
   }
 
 }

@@ -17,13 +17,17 @@ interface Response {
 
 export default class CreateUserService {
   public async execute({ email, password }: Request): Promise<Response> {
-    const repository = getRepository(User);
-    const user = await repository.findOne({
-      where: { email },
-    });
+    try {
+      const repository = getRepository(User);
+      const user = await repository.findOne({
+        where: { email },
+      });
 
-    if (!user) {
-      throw new AppError('Email/password does not match', 401);
+      if (!user) {
+        throw new AppError('Email/password does not match', 401);
+      }
+    } catch (err) {
+      console.log(err);
     }
 
     const matchedPassword = await compare(password, user.password);

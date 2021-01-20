@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import auth from '../config/auth';
-import AppError from '../error/AppError';
+import auth from '@config/auth';
+import AppError from '@shared/error/AppError';
 
 interface Decoder {
   iat: string;

@@ -3,8 +3,8 @@ import express, { Response, Request, NextFunction } from 'express';
 import 'express-async-error';
 import cors from 'cors';
 import routes from './routes';
-import './database';
-import fileConfig from './config/fileConfig';
+import './infra/database';
+import fileConfig from '@config/fileConfig';
 import AppError from './error/AppError';
 
 const app = express();

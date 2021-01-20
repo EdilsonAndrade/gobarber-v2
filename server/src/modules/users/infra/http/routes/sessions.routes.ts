@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import SessionAuthenticationService from '../services/SessionAuthenticationService';
+import SessionAuthenticationService from '@modules/users/services/SessionAuthenticationService';
 
 interface Request {
   name: string;

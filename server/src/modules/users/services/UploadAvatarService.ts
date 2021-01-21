@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import IUsersRepository from '../repositories/IUsersRepository';
 import fs from 'fs';
 import path from 'path';
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -10,9 +10,10 @@ interface Request {
   avatarFilename: string;
 }
 class UploadAvatarService {
+  constructor(private usersRepository: IUsersRepository){};
   public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-    const userRepo = getRepository(User);
-    const user = await userRepo.findOne(user_id);
+    
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User not found to upload Avatar');
@@ -31,9 +32,7 @@ class UploadAvatarService {
       }
     }
 
-    await userRepo.save(user);
-
-    delete user.password;
+    await this.usersRepository.save(user);
 
     return user;
   }

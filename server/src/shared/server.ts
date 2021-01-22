@@ -7,6 +7,8 @@ import './infra/database';
 import fileConfig from '@config/fileConfig';
 import AppError from './error/AppError';
 
+import '@shared/container';
+
 const app = express();
 
 app.use(express.json());

@@ -4,13 +4,16 @@ import path from 'path';
 import User from '@modules/users/infra/typeorm/entities/User';
 import fileConfig from '@config/fileConfig';
 import AppError from '@shared/error/AppError';
-
+import {injectable, inject} from 'tsyringe';
 interface Request {
   user_id: string;
   avatarFilename: string;
 }
+@injectable()
 class UploadAvatarService {
-  constructor(private usersRepository: IUsersRepository){};
+  constructor(
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository){};
   public async execute({ user_id, avatarFilename }: Request): Promise<User> {
     
     const user = await this.usersRepository.findById(user_id);

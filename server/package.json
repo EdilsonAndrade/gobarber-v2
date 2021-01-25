@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules ./src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules ./src/shared/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "test": "jest"
   },
   "dependencies": {
     "@types/cors": "^2.8.9",
@@ -19,6 +20,7 @@
     "multer": "^1.4.2",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.4.0",
     "typeorm": "^0.2.25",
     "typescript": "^3.9.7",
     "uuidv4": "^6.2.2"
@@ -35,7 +37,10 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.6.3",
     "prettier": "^2.0.5",
-    "ts-node-dev": "^1.0.0-pre.56"
+    "ts-jest": "^26.4.4",
+    "ts-node-dev": "^1.0.0-pre.56",
+    "tsconfig-paths": "^3.9.0"
   }
 }

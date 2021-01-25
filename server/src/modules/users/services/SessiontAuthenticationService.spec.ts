@@ -43,4 +43,18 @@ describe("Authentication", ()=>{
 
 
   });
+
+  it('should not authenticate user wrong email', async ()=>{
+    const fakeHashProvider = new FakeHaskProvider();
+    const fakeUserRepository = new UserRepositoryFake();
+    const authenticationService = new SessionAuthenticationService(fakeUserRepository, fakeHashProvider);
+    const createUserService = new CreateUserService(fakeUserRepository, fakeHashProvider);
+    await createUserService.execute({name:"edilson", email:'andrade@gmail.com', password:'123456'});
+    
+    expect(
+      authenticationService.execute({email:'andrdddade@gmail.com', password:'123456'}))
+      .rejects.toBeInstanceOf(AppError);
+
+
+  });
 });

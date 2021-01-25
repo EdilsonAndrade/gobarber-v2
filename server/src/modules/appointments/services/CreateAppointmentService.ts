@@ -1,6 +1,6 @@
+import {injectable, inject} from 'tsyringe';
 import { startOfHour } from 'date-fns';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import {injectable, inject} from 'tsyringe';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import AppError from '@shared/error/AppError';
 

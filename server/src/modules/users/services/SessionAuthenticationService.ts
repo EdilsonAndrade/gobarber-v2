@@ -1,4 +1,4 @@
-import { compare } from 'bcryptjs';
+import IHasProvider from '@modules/users/container/HashProvider/modules/IHashProvider';
 import { sign } from 'jsonwebtoken';
 import User from '@modules/users/infra/typeorm/entities/User';
 import auth from '@config/auth';
@@ -18,7 +18,10 @@ interface Response {
 export default class CreateUserService {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository){};
+    private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private _hashProvider: IHasProvider
+    ){};
 
   public async execute({ email, password }: Request): Promise<Response> {
      const user = await this.usersRepository.findByEmail(email);
@@ -27,7 +30,7 @@ export default class CreateUserService {
         throw new AppError('Email/password does not match', 401);
       }
 
-      const matchedPassword = await compare(password, user.password);
+      const matchedPassword = await this._hashProvider.compareHash(password, user.password);
 
       if (!matchedPassword) {
         throw new AppError('Email/password does not match', 401);

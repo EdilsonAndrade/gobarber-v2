@@ -1,4 +1,4 @@
-const {pathToModuleNameMapper } = require('ts-jest/utils')
+const {pathsToModuleNameMapper } = require('ts-jest/utils')
 const {compilerOptions } = require('./tsconfig.json')
 /*
  * For a detailed explanation regarding each configuration property, visit:
@@ -19,13 +19,15 @@ module.exports = {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  // collectCoverage: false,
+  collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    '<rootDir>/src/modules/**/services/*.ts',
+  ],
 
   // The directory where Jest should output its coverage files
-  // coverageDirectory: undefined,
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -83,7 +85,7 @@ module.exports = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  moduleNameMapper: pathToModuleNameMapper(compilerOptions.paths, {prefix:  '<rootDir>/src/'}),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {prefix:  '<rootDir>/src/'}),
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -130,7 +132,7 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/src/shared/setup/jestSetup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

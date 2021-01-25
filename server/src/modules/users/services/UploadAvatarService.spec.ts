@@ -20,7 +20,6 @@ describe("Upload User Avatar", ()=>{
       password:"1234"
     });
 
-console.log('user id', user.id)
     const response = await uploadUserAvatarService.execute({
       avatarFilename:"avatar.jpg",
       user_id:user.id
@@ -30,5 +29,18 @@ console.log('user id', user.id)
 
   });
 
+  it('should not find user and upload his avatar failed', async ()=>{
+    const fakeHashProvider = new FakeHaskProvider();
+    const fakeUserRepository = new UserRepositoryFake();
+    const fakeStorageProvider = new FakeStorage();
+    const uploadUserAvatarService = new UploadUserAvatarService(fakeUserRepository, fakeStorageProvider);
 
+
+
+    expect(uploadUserAvatarService.execute({
+      avatarFilename:"avatar.jpg",
+      user_id:'11'
+    })).rejects.toBeInstanceOf(AppError);
+
+  });
 });

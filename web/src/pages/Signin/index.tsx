@@ -32,11 +32,13 @@ const Signin: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('Digite e-mail válido'),
         password: Yup.string().min(6, 'Mínimo 6 caracteres'),
       });
+
       await schema.validate(data, {
         abortEarly: false,
       });
-
+      console.log('aqui');
       await signIn({ email: data.email, password: data.password });
+
       history.push('/dashboard');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

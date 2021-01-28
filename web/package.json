@@ -29,8 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:coverage": "react-scripts test --collectCoverage --watchAll=false",
+    "test": "react-scripts test --env=jsdom-fourteen",
+    "test:coverage": "react-scripts test --collectCoverage --watchAll=false --env=jsdom-fourteen",
     "eject": "react-scripts eject"
   },
   "browserslist": {

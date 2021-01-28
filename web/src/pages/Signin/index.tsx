@@ -36,23 +36,21 @@ const Signin: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-      console.log('aqui');
-      await signIn({ email: data.email, password: data.password });
 
+      await signIn({ email: data.email, password: data.password });
       history.push('/dashboard');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         formRef.current?.setErrors(handleErrros(error));
         return;
       }
-
       showMessage({
         title: 'Ocorreu um erro',
         message: 'Ocorreu um erro ao fazer login, cheque as credenciais',
         type: 'error',
       });
     }
-  }, [signIn, showMessage]);
+  }, [signIn, showMessage, history]);
 
   return (
     <Container>

@@ -32,6 +32,7 @@ const Signin: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('Digite e-mail válido'),
         password: Yup.string().min(6, 'Mínimo 6 caracteres'),
       });
+
       await schema.validate(data, {
         abortEarly: false,
       });
@@ -43,14 +44,13 @@ const Signin: React.FC = () => {
         formRef.current?.setErrors(handleErrros(error));
         return;
       }
-
       showMessage({
         title: 'Ocorreu um erro',
         message: 'Ocorreu um erro ao fazer login, cheque as credenciais',
         type: 'error',
       });
     }
-  }, [signIn, showMessage]);
+  }, [signIn, showMessage, history]);
 
   return (
     <Container>

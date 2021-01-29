@@ -11,6 +11,7 @@ interface ICredential{
 interface IUserData{
   id:string;
   name:string;
+  email:string;
 }
 interface IUserCredential{
   token:string;
@@ -54,6 +55,7 @@ const AuthProvider:React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     localStorage.removeItem('Gobarber_Token');
     localStorage.removeItem('Gobarber_User');
+    setUserData({} as IUserCredential);
   }, []);
   return (
     <AuthContext.Provider value={{
@@ -70,18 +72,7 @@ const AuthProvider:React.FC = ({ children }) => {
 function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
   return context;
 }
 
-function useLogout(): AuthContextData {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-}
-export { AuthProvider, useAuth, useLogout };
+export { AuthProvider, useAuth };

@@ -1,5 +1,5 @@
 import React, {
-  createContext, useCallback, useContext, useState,
+  createContext, useCallback, useContext, useState, ReactNode
 } from 'react';
 
 import api from '../services/api';
@@ -25,7 +25,7 @@ interface AuthContextData{
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider:React.FC = ({ children }) => {
+const AuthProvider:React.FC<{children:React.ReactNode}> = ({ children }) => {
   const [userData, setUserData] = useState<IUserCredential>(() => {
     const token = localStorage.getItem('@Gobarber_Token');
     const user = localStorage.getItem('@Gobarber_User');
@@ -40,7 +40,7 @@ const AuthProvider:React.FC = ({ children }) => {
     return {} as IUserCredential;
   });
 
-  const signIn = useCallback(async ({ email, password }) => {
+  const signIn = useCallback(async ({ email, password }:{email: string, password:string}) => {
     const response = await api.post('/sessions', {
       email,
       password,

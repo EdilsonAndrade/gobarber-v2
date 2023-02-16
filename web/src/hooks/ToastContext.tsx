@@ -16,7 +16,7 @@ interface ToastData{
 }
 const ToastContext = createContext<ToastData>({} as ToastData);
 
-const ToastProvider:React.FC = ({ children }) => {
+const ToastProvider:React.FC<{children:React.ReactNode}> = ({ children }) => {
   const [messages, setMessages] = useState<IToastMessage[]>([]);
 
   const showMessage = useCallback(({ title, message, type }:Omit<IToastMessage, 'id'>) => {
